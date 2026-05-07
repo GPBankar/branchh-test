@@ -1,0 +1,190 @@
+# ==============================
+# STEP 1 : CREATE GITHUB REPO
+# ==============================
+
+# Go to GitHub and create a repo named:
+# branch-test
+
+
+# ==============================
+# STEP 2 : CLONE REPOSITORY
+# ==============================
+
+# Move to home directory
+cd ~
+
+# Clone repository
+git clone https://github.com/YOUR_USERNAME/branch-test.git
+
+# Enter repository
+cd branch-test
+
+
+# ==============================
+# STEP 3 : CREATE hello.py FILE
+# ==============================
+
+# Create file
+nano hello.py
+
+# Add below code inside hello.py
+
+print("Hello from Main Branch")
+
+# Save file:
+# CTRL + O  -> Enter
+# CTRL + X
+
+
+# ==============================
+# STEP 4 : PUSH FIRST COMMIT
+# ==============================
+
+# Add file to staging
+git add .
+
+# Commit changes
+git commit -m "First commit"
+
+# Push to GitHub
+git push origin main
+
+
+# ==================================================
+# STEP 5 : CREATE BRANCH d-1 (Developer 1 Branch)
+# ==================================================
+
+# Create and switch to d-1 branch
+git checkout -b d-1
+
+# Open file
+nano hello.py
+
+# Modify file like this:
+
+print("Hello from Main Branch")
+print("Code added by Developer 1")
+
+# Save:
+# CTRL + O -> Enter
+# CTRL + X
+
+# Add file
+git add hello.py
+
+# Commit
+git commit -m "Developer-1 changes"
+
+
+# ==================================================
+# STEP 6 : CREATE BRANCH d-2 (Developer 2 Branch)
+# ==================================================
+
+# Switch back to main
+git checkout main
+
+# Create and switch to d-2
+git checkout -b d-2
+
+# Open file
+nano hello.py
+
+# Modify SAME LINE differently to create conflict
+
+print("Hello from Main Branch")
+print("Code added by Developer 2")
+
+# Save file
+
+# Add file
+git add hello.py
+
+# Commit
+git commit -m "Developer-2 changes"
+
+
+# ==================================================
+# STEP 7 : TRY MERGING d-1 INTO d-2
+# ==================================================
+
+# Make sure you are inside d-2 branch
+git checkout d-2
+
+# Merge d-1 into d-2
+git merge d-1
+
+# You will get MERGE CONFLICT ERROR
+
+
+# ==================================================
+# STEP 8 : RESOLVE MERGE CONFLICT
+# ==================================================
+
+# Open conflicted file
+nano hello.py
+
+# You will see something like this:
+
+<<<<<<< HEAD
+print("Code added by Developer 2")
+=======
+print("Code added by Developer 1")
+>>>>>>> d-1
+
+# Remove conflict symbols and keep final code like this:
+
+print("Hello from Main Branch")
+print("Code added by Developer 1")
+print("Code added by Developer 2")
+
+# Save file
+
+
+# ==================================================
+# STEP 9 : ADD AND COMMIT AFTER CONFLICT RESOLUTION
+# ==================================================
+
+# Add resolved file
+git add hello.py
+
+# Commit resolved merge
+git commit -m "Conflict resolved"
+
+
+# ==================================================
+# STEP 10 : MERGE d-2 INTO MAIN
+# ==================================================
+
+# Switch to main branch
+git checkout main
+
+# Merge d-2 branch into main
+git merge d-2
+
+# Push final code to GitHub
+git push origin main
+
+
+# ==================================================
+# STEP 11 : DELETE EXTRA BRANCHES
+# ==================================================
+
+# Delete d-1 branch
+git branch -d d-1
+
+# Delete d-2 branch
+git branch -d d-2
+
+
+# ==================================================
+# OPTIONAL COMMANDS
+# ==================================================
+
+# Check current branch
+git branch
+
+# Check status
+git status
+
+# See commit history
+git log --oneline
